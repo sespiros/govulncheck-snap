@@ -1,0 +1,46 @@
+name: govulncheck
+base: core22
+summary: Go vulnerability database checker
+description: |
+  Govulncheck reports known vulnerabilities that affect Go code.
+
+  It uses static analysis of source code or a binary's symbol table
+  to narrow down reports to only those that could affect the application.
+
+  For more information about the API behind govulncheck, see
+  https://go.dev/security/vulncheck.
+adopt-info: govulncheck
+
+grade: devel
+confinement: strict
+
+layout:
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libc_nonshared.a:
+    bind-file: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libc_nonshared.a
+
+apps:
+  govulncheck:
+    command: bin/govulncheck
+    plugs:
+      - home
+      - network
+    environment:
+      CGO_CFLAGS: "$CGO_CFLAGS -I$SNAP/usr/include -I$SNAP/usr/include/x86_64-linux-gnu"
+
+parts:
+  govulncheck:
+    plugin: go
+    source-type: git
+    source: https://github.com/golang/vuln
+    build-packages:
+      - gcc
+      - golang-go
+    stage-packages:
+      - gcc
+      - git
+      - golang-go
+      - libc6-dev
+    override-pull: |
+      snapcraftctl pull
+      version=$(git log -1 --pretty=format:"v0.0.0-%cd-%h" --date=format-local:%Y%m%d%H%M%S)
+      snapcraftctl set-version $version
