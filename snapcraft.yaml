@@ -1,5 +1,5 @@
 name: govulncheck
-version: 1.0.0
+version: 1.0.4
 base: core22
 summary: Go vulnerability database checker
 description: |
@@ -32,7 +32,7 @@ parts:
   govulncheck:
     plugin: go
     source-type: git
-    source-tag: v1.0.0
+    source-tag: v1.0.4
     source: https://github.com/golang/vuln
     build-packages:
       - gcc
