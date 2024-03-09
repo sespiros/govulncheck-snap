@@ -13,11 +13,7 @@ description: |
 adopt-info: govulncheck
 
 grade: stable
-confinement: strict
-
-layout:
-  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libc_nonshared.a:
-    bind-file: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libc_nonshared.a
+confinement: classic
 
 apps:
   govulncheck:
@@ -25,20 +21,12 @@ apps:
     plugs:
       - home
       - network
-    environment:
-      CGO_CFLAGS: "$CGO_CFLAGS -I$SNAP/usr/include -I$SNAP/usr/include/x86_64-linux-gnu"
 
 parts:
   govulncheck:
     plugin: go
     source-type: git
     source-tag: v1.0.4
-    source: https://github.com/golang/vuln
-    build-packages:
-      - gcc
-      - golang-go
-    stage-packages:
-      - gcc
-      - git
-      - golang-go
-      - libc6-dev
+    source: https://go.googlesource.com/vuln
+    build-snaps:
+      - go/latest/stable
