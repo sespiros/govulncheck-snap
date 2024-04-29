@@ -30,3 +30,5 @@ parts:
     source: https://go.googlesource.com/vuln
     build-snaps:
       - go/latest/stable
+    stage-snaps:
+      - go/latest/stable
