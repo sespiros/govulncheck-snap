@@ -13,7 +13,7 @@ description: |
 adopt-info: govulncheck
 
 grade: stable
-confinement: classic
+confinement: strict
 
 apps:
   govulncheck:
